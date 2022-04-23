@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Client.ViewModels;
+using Xamarin.Forms;
 
 namespace Client.Views
 {
@@ -7,6 +9,10 @@ namespace Client.Views
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = new MainPageViewModel();
+
+            ProfileButton.Clicked += async (sender, args) => await Navigation.PushAsync(new ProfilePage());
+            AddCardButton.Clicked += async (sender, args) => await Navigation.PushAsync(new AddCardPage());
         }
     }
 }

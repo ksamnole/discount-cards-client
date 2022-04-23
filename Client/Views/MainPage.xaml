@@ -2,19 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Client.Views.MainPage">
-    
-    <StackLayout Spacing="0">
+    <NavigationPage.TitleView>
         <Grid HeightRequest="50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="profile.png" Scale="0.7"></Image>
+            <ImageButton Grid.Column="0" x:Name="ProfileButton" Source="profile.png" Scale="0.5" BackgroundColor="#ffffff"/>
             <Label Grid.Column="1" Text="Ваши карты" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
-            <Image Grid.Column="2" Source="add_card.png" Scale="0.7" />
+            <ImageButton Grid.Column="2" x:Name="AddCardButton" Source="add_card.png" Scale="0.5" BackgroundColor="#ffffff"/>
         </Grid>
-        <StackLayout>
+    </NavigationPage.TitleView>
+    <StackLayout>
             <ScrollView Padding="25, 5, 25, 5">
                 <StackLayout>
                     <Rectangle Fill="LightPink" WidthRequest="327" HeightRequest="200" RadiusX="15" RadiusY="15" />
@@ -23,7 +23,6 @@
                     <Rectangle Fill="Yellow" WidthRequest="327" HeightRequest="200" RadiusX="15" RadiusY="15" />
                 </StackLayout>
             </ScrollView>
-        </StackLayout>
     </StackLayout>
 
 </ContentPage>
