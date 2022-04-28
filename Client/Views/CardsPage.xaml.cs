@@ -14,14 +14,18 @@ namespace Client.Views
         {
             InitializeComponent();
             
-            var viewModel = new CardsPageViewModel();
-            BindingContext = viewModel;
+            var cardsPageViewModel = new CardsPageViewModel();
+            var addCardPageViewModel = new AddCardViewModel(Navigation);
+            
+            BindingContext = cardsPageViewModel;
             
             ProfileButton.Clicked += async (sender, args) => await Navigation.PushAsync(new ProfilePage());
-            AddCardButton.Clicked += async (sender, args) => await Navigation.PushAsync(new AddCardPage());
+            AddCardButton.Clicked += async (sender, args) => await Navigation.PushAsync(new AddCardPage(addCardPageViewModel));
             
-            viewModel.OnRefreshCardsCompleted += () => ListViewCards.IsRefreshing = false;
-            viewModel.GetAllCardsAsync();
+            cardsPageViewModel.OnRefreshCardsCompleted += () => ListViewCards.IsRefreshing = false;
+            addCardPageViewModel.OnNewCardAdded += () => cardsPageViewModel.GetAllCardsAsync();
+            
+            cardsPageViewModel.GetAllCardsAsync();
         }
 
         private async void Card_OnClick(object sender, EventArgs e)

@@ -10,7 +10,8 @@ namespace Client.ViewModels
     {
         public ICommand AddNewCardCommand { get; }
         public string CardNumber { get; set; }
-
+        public event Action OnNewCardAdded;
+        
         private readonly IAddCardModel _addCardModel;
         private readonly INavigation _navigation;
 
@@ -24,6 +25,7 @@ namespace Client.ViewModels
         private async void AddNewCard()
         {
             await _addCardModel.AddNewCardAsync(CardNumber);
+            OnNewCardAdded?.Invoke();
             await _navigation.PopAsync();
         }
     }

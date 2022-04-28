@@ -27,11 +27,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <!-- <ScrollView> -->
-        <!--         <StackLayout> -->
-        <!--              -->
-        <!--         </StackLayout> -->
-        <!--     </ScrollView> -->
     </StackLayout>
 
 </ContentPage>

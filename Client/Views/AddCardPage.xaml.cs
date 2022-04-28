@@ -12,10 +12,10 @@ namespace Client.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddCardPage : ContentPage
     {
-        public AddCardPage()
+        public AddCardPage(AddCardViewModel addCardViewModel)
         {
             InitializeComponent();
-            BindingContext = new AddCardViewModel(Navigation);
+            BindingContext = addCardViewModel;
             NavigationPage.SetIconColor(this, Color.Black);
         }
     }
