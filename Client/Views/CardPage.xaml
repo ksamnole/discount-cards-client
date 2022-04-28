@@ -4,15 +4,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Client.Views.CardPage">
     <NavigationPage.TitleView>
-        <Label Text="Название карты" HorizontalTextAlignment="Center" Margin="0, 0, 75, 0" />
+            <Grid HeightRequest="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="Title" Grid.Column="1" Grid.ColumnSpan="2" Text="Название карты" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+                <ImageButton Grid.Column="3" Grid.ColumnSpan="2" Source="delete_card.png" BackgroundColor="White" Scale="0.5"></ImageButton>
+            </Grid>
     </NavigationPage.TitleView>
     
     <StackLayout Padding="40, 5, 40, 5">
         <ImageButton x:Name="Card" HeightRequest="200" Aspect="Fill" CornerRadius="15" IsEnabled="False" />
         <Image Source="test_code.png"></Image>
-        <Label Text="Номер карты" />
-        <Label TextDecorations="Underline" TextColor="Black" FontSize="20" FontAttributes="Bold" Text="7789245624562123" />
-        <Label Text="Номер Кода" />
-        <Label TextDecorations="Underline" TextColor="Black" FontSize="20" FontAttributes="Bold" Text="23214543453453" />
+        <Label Text="Номер карты" TextColor="#323232" />
+        <Label x:Name="CardNumber" TextDecorations="Underline" TextColor="Black" FontSize="20" FontAttributes="Bold" Text="1234567890123456" />
+        <Label Text="Номер Кода" TextColor="#323232" />
+        <Label TextDecorations="Underline" TextColor="Black" FontSize="20" FontAttributes="Bold" Text="12345678901234" />
     </StackLayout>
 </ContentPage>

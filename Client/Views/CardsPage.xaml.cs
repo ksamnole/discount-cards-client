@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Client.Entities;
 using Client.ViewModels;
 using Client.Views.Auth;
 using Xamarin.Forms;
@@ -29,12 +30,6 @@ namespace Client.Views
             cardsPageViewModel.GetAllCardsAsync();
         }
 
-        private async void Card_OnClick(object sender, EventArgs e)
-        {
-            var imageSource = ((ImageButton)sender).Source;
-            await Navigation.PushAsync(new CardPage(imageSource));
-        }
-
         private async void GoToRegistrationPage(object sender, EventArgs e)
         {
             // TEST LOGIN AND REGISTER
@@ -45,6 +40,12 @@ namespace Client.Views
         {
             // TEST LOGIN AND REGISTER
             await Navigation.PushAsync(new LoginPage());
+        }
+
+        private async void Card_OnClick(object sender, ItemTappedEventArgs e)
+        {
+            var card = e.Item as CardEntity;
+            await Navigation.PushAsync(new CardPage(card));
         }
     }
 }

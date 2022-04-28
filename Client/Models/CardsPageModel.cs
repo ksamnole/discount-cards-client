@@ -10,10 +10,10 @@ namespace Client.Models
         {
             return new List<CardEntity>()
             {
-                new CardEntity() { Name = "adidas", ImageSource = "adidas.png", Number = "1" },
-                new CardEntity() { Name = "perekrestok", ImageSource = "perekrestok.png", Number = "2" },
-                new CardEntity() { Name = "magnit", ImageSource = "magnit.png", Number = "3" },
-                new CardEntity() { Name = "sportmaster", ImageSource = "sportmaster.png", Number = "4" },
+                new CardEntity() { Name = "Адидас", ImageSource = "adidas.png", Number = "1234567876976" },
+                new CardEntity() { Name = "Перекресток", ImageSource = "perekrestok.png", Number = "2432432453243" },
+                new CardEntity() { Name = "Магнит", ImageSource = "magnit.png", Number = "3432432432" },
+                new CardEntity() { Name = "Спортмастер", ImageSource = "sportmaster.png", Number = "4432432432" },
             };
         }
     }

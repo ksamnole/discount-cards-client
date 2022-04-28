@@ -18,12 +18,12 @@
     </NavigationPage.TitleView>
     
     <StackLayout Padding="40, 5, 40, 5">
-        <Label Text="Логин" />
+        <Label Text="Логин" TextColor="#323232" />
         <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
             <Entry TextColor="Black" Placeholder="Example" />
         </Frame>
         
-        <Label Text="Пароль" />
+        <Label Text="Пароль" TextColor="#323232"/>
         <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
             <Entry IsPassword="True" TextColor="Black" Placeholder="********" />
         </Frame>

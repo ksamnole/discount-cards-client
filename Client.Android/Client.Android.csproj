@@ -79,6 +79,7 @@
     <AndroidResource Include="Resources\drawable\adidas.png">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\delete_card.png" />
     <AndroidResource Include="Resources\drawable\magnit.png" />
     <AndroidResource Include="Resources\drawable\perekrestok.png" />
     <AndroidResource Include="Resources\drawable\profile.png">

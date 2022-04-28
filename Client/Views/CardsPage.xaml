@@ -20,11 +20,11 @@
     <StackLayout Padding="40, 0, 40, 0">
         <Button Text="Register" Clicked="GoToRegistrationPage"></Button>
         <Button Text="Login" Clicked="GoToLoginPage"></Button>
-        <ListView x:Name="ListViewCards" ItemsSource="{Binding Cards}" RefreshCommand="{Binding GetAllCardsCommand}" IsPullToRefreshEnabled="True" RowHeight="200" HasUnevenRows="True">
+        <ListView ItemTapped="Card_OnClick" x:Name="ListViewCards" ItemsSource="{Binding Cards}" RefreshCommand="{Binding GetAllCardsCommand}" IsPullToRefreshEnabled="True" RowHeight="200" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <ImageButton Source="{Binding ImageSource}" Aspect="Fill" CornerRadius="15" Clicked="Card_OnClick" Margin="0,0,0,5" />
+                        <ImageButton Source="{Binding ImageSource}" Aspect="Fill" CornerRadius="15" IsEnabled="False" Margin="0,0,0,5" />
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
