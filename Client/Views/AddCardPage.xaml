@@ -4,13 +4,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Client.Views.AddCardPage">
     <NavigationPage.TitleView>
-        <Label Grid.Column="1" Text="Добавление карты" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+        <Label Text="Добавить карту" HorizontalTextAlignment="Center" Margin="0, 0, 75, 0" />
     </NavigationPage.TitleView>
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Hello, world!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    
+    <StackLayout Padding="40, 5, 40, 5">
+        <Label Text="Номер карты" />
+        <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
+            <Entry x:Name="CardNumber" Text="{Binding CardNumber }" TextColor="Black" Placeholder="7789245624562123" />
+        </Frame>
+        
+        <Button TextColor="White" Text="Сохранить" CornerRadius="5" BackgroundColor="#9FB4E9" Margin="0,0,0,15" VerticalOptions="EndAndExpand" Command="{ Binding AddNewCardCommand }"></Button>
+        
+    </StackLayout>
 </ContentPage>

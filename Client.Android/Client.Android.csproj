@@ -72,10 +72,21 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\add_card.png" />
-    <AndroidResource Include="Resources\drawable\profile.png">
+    <AndroidResource Include="Resources\drawable\add_card.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\adidas.png">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\magnit.png" />
+    <AndroidResource Include="Resources\drawable\perekrestok.png" />
+    <AndroidResource Include="Resources\drawable\profile.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\sportmaster.png" />
+    <AndroidResource Include="Resources\drawable\test_code.png" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />

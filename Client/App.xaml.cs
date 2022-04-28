@@ -9,7 +9,7 @@ namespace Client
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage())
+            MainPage = new NavigationPage(new CardsPage())
             {
                 BarBackgroundColor = Color.White
             };
