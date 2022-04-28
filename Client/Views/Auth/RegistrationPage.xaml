@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Client.Views.Auth.RegistrationPage">
+    
+    <NavigationPage.TitleView>
+        <Grid HeightRequest="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Grid.ColumnSpan="2" TextDecorations="Underline" Text="Регистрация" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="3" Grid.ColumnSpan="2" Text="Войти" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+        </Grid>
+    </NavigationPage.TitleView>
+    
+    <StackLayout Padding="40, 5, 40, 5">
+        <Label Text="Логин" />
+        <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
+            <Entry TextColor="Black" Placeholder="Example" />
+        </Frame>
+        
+        <Label Text="Пароль" />
+        <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
+            <Entry IsPassword="True" TextColor="Black" Placeholder="********" />
+        </Frame>
+        
+        <Label Text="Повторите пароль" />
+        <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
+            <Entry IsPassword="True" TextColor="Black" Placeholder="********" />
+        </Frame>
+        
+        <Button TextColor="White" Text="Зарегистрироваться" CornerRadius="5" BackgroundColor="#9FB4E9" Margin="0,0,0,15" VerticalOptions="EndAndExpand" />
+        
+    </StackLayout>
+</ContentPage>

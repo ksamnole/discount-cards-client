@@ -14,18 +14,18 @@ namespace Client.ViewModels
         public ObservableCollection<CardEntity> Cards { get; }
         public event Action OnRefreshCardsCompleted;
  
-        private readonly ICardsPageModel _addCardModel;
+        private readonly ICardsPageModel _cardsModel;
 
         public CardsPageViewModel()
         {
-            _addCardModel = new CardsPageModel();
+            _cardsModel = new CardsPageModel();
             Cards = new ObservableCollection<CardEntity>();
             GetAllCardsCommand = new Command(GetAllCardsAsync);
         }
 
         public async void GetAllCardsAsync()
         {
-            var allCards = await _addCardModel.GetAllCardsAsync();
+            var allCards = await _cardsModel.GetAllCardsAsync();
 
             Cards.Clear();
 

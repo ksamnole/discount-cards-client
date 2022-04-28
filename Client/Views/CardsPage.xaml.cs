@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Client.ViewModels;
+using Client.Views.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -32,6 +33,18 @@ namespace Client.Views
         {
             var imageSource = ((ImageButton)sender).Source;
             await Navigation.PushAsync(new CardPage(imageSource));
+        }
+
+        private async void GoToRegistrationPage(object sender, EventArgs e)
+        {
+            // TEST LOGIN AND REGISTER
+            await Navigation.PushAsync(new RegistrationPage());
+        }
+        
+        private async void GoToLoginPage(object sender, EventArgs e)
+        {
+            // TEST LOGIN AND REGISTER
+            await Navigation.PushAsync(new LoginPage());
         }
     }
 }

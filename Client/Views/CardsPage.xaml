@@ -12,12 +12,14 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <ImageButton Grid.Column="0" x:Name="ProfileButton" Source="profile.png" Scale="0.5" BackgroundColor="#ffffff"/>
-            <Label Grid.Column="1" Grid.ColumnSpan="3" TextColor="Black" Text="Ваши карты" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="1" Grid.ColumnSpan="3" Text="Ваши карты" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
             <ImageButton Grid.Column="4" x:Name="AddCardButton" Source="add_card.png" Scale="0.5" BackgroundColor="#ffffff" Margin="0,0,25,0"/>
         </Grid>
     </NavigationPage.TitleView>
 
     <StackLayout Padding="40, 0, 40, 0">
+        <Button Text="Register" Clicked="GoToRegistrationPage"></Button>
+        <Button Text="Login" Clicked="GoToLoginPage"></Button>
         <ListView x:Name="ListViewCards" ItemsSource="{Binding Cards}" RefreshCommand="{Binding GetAllCardsCommand}" IsPullToRefreshEnabled="True" RowHeight="200" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
