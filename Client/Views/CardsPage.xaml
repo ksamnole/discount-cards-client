@@ -20,7 +20,7 @@
     <StackLayout Padding="40, 0, 40, 0">
         <Button Text="Register" Clicked="GoToRegistrationPage"></Button>
         <Button Text="Login" Clicked="GoToLoginPage"></Button>
-        <ListView ItemTapped="Card_OnClick" x:Name="ListViewCards" ItemsSource="{Binding Cards}" RefreshCommand="{Binding GetAllCardsCommand}" IsPullToRefreshEnabled="True" RowHeight="200" HasUnevenRows="True">
+        <ListView ItemTapped="Card_OnClick" x:Name="ListViewCards" ItemsSource="{Binding Cards}" RefreshCommand="{Binding GetAllUserCardsAsyncCommand }" IsPullToRefreshEnabled="True" RowHeight="200" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

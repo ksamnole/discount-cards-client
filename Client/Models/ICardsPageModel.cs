@@ -7,6 +7,6 @@ namespace Client.Models
 {
     public interface ICardsPageModel
     {
-        Task<IEnumerable<CardEntity>> GetAllCardsAsync();
+        Task<IEnumerable<CardEntity>> GetAllUserCardsAsync(int userId);
     }
 }

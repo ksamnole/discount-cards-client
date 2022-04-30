@@ -4,6 +4,6 @@ namespace Client.Models
 {
     public interface IAddCardModel
     {
-        Task AddNewCardAsync(string number);
+        Task AddNewCardAsync(int userId, string cardNumber);
     }
 }

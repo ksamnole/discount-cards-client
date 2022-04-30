@@ -10,7 +10,7 @@ namespace Client.ViewModels
 {
     public class CardsPageViewModel : BaseViewModel
     {
-        public ICommand GetAllCardsCommand { get; }
+        public ICommand GetAllUserCardsAsyncCommand { get; }
         public ObservableCollection<CardEntity> Cards { get; }
         public event Action OnRefreshCardsCompleted;
  
@@ -20,12 +20,15 @@ namespace Client.ViewModels
         {
             _cardsModel = new CardsPageModel();
             Cards = new ObservableCollection<CardEntity>();
-            GetAllCardsCommand = new Command(GetAllCardsAsync);
+            GetAllUserCardsAsyncCommand = new Command(GetAllUserCardsAsync);
         }
 
-        public async void GetAllCardsAsync()
+        public async void GetAllUserCardsAsync()
         {
-            var allCards = await _cardsModel.GetAllCardsAsync();
+            // После добавления регистрации должен использовать id конкретного пользователя
+            var fakeUserId = 1;
+            
+            var allCards = await _cardsModel.GetAllUserCardsAsync(fakeUserId);
 
             Cards.Clear();
 

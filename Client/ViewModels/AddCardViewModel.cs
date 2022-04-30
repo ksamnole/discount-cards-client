@@ -24,7 +24,10 @@ namespace Client.ViewModels
 
         private async void AddNewCard()
         {
-            await _addCardModel.AddNewCardAsync(CardNumber);
+            // После добавления регистрации должен использовать id конкретного пользователя
+            var fakeUserId = 1;
+            
+            await _addCardModel.AddNewCardAsync(fakeUserId, CardNumber);
             OnNewCardAdded?.Invoke();
             await _navigation.PopAsync();
         }

@@ -25,9 +25,9 @@ namespace Client.Views
             AddCardButton.Clicked += async (sender, args) => await Navigation.PushAsync(new AddCardPage(addCardPageViewModel));
             
             cardsPageViewModel.OnRefreshCardsCompleted += () => ListViewCards.IsRefreshing = false;
-            addCardPageViewModel.OnNewCardAdded += () => cardsPageViewModel.GetAllCardsAsync();
+            addCardPageViewModel.OnNewCardAdded += () => cardsPageViewModel.GetAllUserCardsAsync();
             
-            cardsPageViewModel.GetAllCardsAsync();
+            cardsPageViewModel.GetAllUserCardsAsync();
         }
 
         private async void GoToRegistrationPage(object sender, EventArgs e)
