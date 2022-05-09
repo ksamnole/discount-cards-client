@@ -1,26 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using Client.Entities;
-using Client.Entities.Card;
 using Client.Models.Interfaces;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace Client.Models
 {
-    public class AddCardModel : IAddCardModel
+    public class LoginModel : ILoginModel
     {
-        public async Task AddNewCardAsync(CreateCardEntity card)
+        public async Task<bool> Authentication(UserEntity user)
         {
-            var requestUri = $"cards";
-            var data = JsonConvert.SerializeObject(card);
+            var requestUri = $"user/auth";
+            var data = JsonConvert.SerializeObject(new
+            {
+                Login = user.Login,
+                Password = user.Password
+            });
             var content = new StringContent(data, Encoding.UTF8, "application/json");
 
             var response = await HttpClients.Client.HttpClient.PostAsync(requestUri, content);
-
+            
             var responseBody = await response.Content.ReadAsStringAsync();
             
             if (!response.IsSuccessStatusCode)
@@ -34,7 +39,19 @@ namespace Client.Models
                 {
                     await UserDialogs.Instance.AlertAsync("Внутренняя ошибка сервера");
                 }
+
+                return false;
             }
+
+            if (!Convert.ToBoolean(responseBody)) return false;
+            
+            Application.Current.Properties.Add("User", user.Login);
+            Application.Current.Properties.Add("Password", user.Password);
+
+            await Application.Current.SavePropertiesAsync();
+
+            return true;
+
         }
     }
 }

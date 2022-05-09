@@ -5,22 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using Client.Entities;
-using Client.Entities.Card;
 using Client.Models.Interfaces;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace Client.Models
 {
-    public class AddCardModel : IAddCardModel
+    public class RegistrationModel : IRegistrationModel
     {
-        public async Task AddNewCardAsync(CreateCardEntity card)
+        public async Task<bool> Registration(UserEntity user)
         {
-            var requestUri = $"cards";
-            var data = JsonConvert.SerializeObject(card);
+            var requestUri = $"user";
+            var data = JsonConvert.SerializeObject(user);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
 
             var response = await HttpClients.Client.HttpClient.PostAsync(requestUri, content);
-
+            
             var responseBody = await response.Content.ReadAsStringAsync();
             
             if (!response.IsSuccessStatusCode)
@@ -34,7 +34,15 @@ namespace Client.Models
                 {
                     await UserDialogs.Instance.AlertAsync("Внутренняя ошибка сервера");
                 }
+
+                return false;
             }
+            Application.Current.Properties.Add("User", user.Login);
+            Application.Current.Properties.Add("Password", user.Password);
+                
+            await Application.Current.SavePropertiesAsync();
+
+            return true;
         }
     }
 }

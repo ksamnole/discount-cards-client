@@ -13,16 +13,16 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label x:Name="Title" Grid.Column="1" Grid.ColumnSpan="2" Text="Название карты" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
-                <ImageButton Grid.Column="3" Grid.ColumnSpan="2" Source="delete_card.png" BackgroundColor="White" Scale="0.5"></ImageButton>
+                <ImageButton Grid.Column="3" Grid.ColumnSpan="2" Source="delete_card.png" BackgroundColor="White" Scale="0.5" Command="{Binding DeleteCardAsyncCommand}"></ImageButton>
             </Grid>
     </NavigationPage.TitleView>
     
     <StackLayout Padding="40, 5, 40, 5">
-        <ImageButton x:Name="Card" HeightRequest="200" Aspect="Fill" CornerRadius="15" IsEnabled="False" />
-        <Image Source="test_code.png"></Image>
+        <ImageButton x:Name="CardImage" HeightRequest="200" Aspect="AspectFill" CornerRadius="15" IsEnabled="False" />
+        <Image x:Name="BarcodeImage"></Image>
         <Label Text="Номер карты" TextColor="#323232" />
         <Label x:Name="CardNumber" TextDecorations="Underline" TextColor="Black" FontSize="20" FontAttributes="Bold" Text="1234567890123456" />
-        <Label Text="Номер Кода" TextColor="#323232" />
-        <Label TextDecorations="Underline" TextColor="Black" FontSize="20" FontAttributes="Bold" Text="12345678901234" />
+        <!-- <Label Text="Номер Кода" TextColor="#323232" /> -->
+        <!-- <Label TextDecorations="Underline" TextColor="Black" FontSize="20" FontAttributes="Bold" Text="12345678901234" /> -->
     </StackLayout>
 </ContentPage>

@@ -1,4 +1,5 @@
 ﻿using Client.Views;
+using Client.Views.Auth;
 using Xamarin.Forms;
 
 namespace Client
@@ -8,11 +9,19 @@ namespace Client
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage(new CardsPage())
+            
+            if (Application.Current.Properties.ContainsKey("User"))
             {
-                BarBackgroundColor = Color.White
-            };
+                var login = Application.Current.Properties["User"] as string;
+                MainPage = new NavigationPage(new CardsPage(login))
+                {
+                    BarBackgroundColor = Color.White
+                };
+            }
+            else
+            {
+                MainPage = new RegistrationPage();
+            }
         }
 
         protected override void OnStart()

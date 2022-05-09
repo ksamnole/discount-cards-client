@@ -6,5 +6,8 @@
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="Black"></Setter>
         </Style>
+        <Style TargetType="StackLayout">
+            <Setter Property="BackgroundColor" Value="White"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

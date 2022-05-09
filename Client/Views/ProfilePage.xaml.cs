@@ -12,10 +12,12 @@ namespace Client.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilePage : ContentPage
     {
-        public ProfilePage()
+        public ProfilePage(string login)
         {
             InitializeComponent();
             NavigationPage.SetIconColor(this, Color.Black);
+
+            Login.Text = login;
         }
     }
 }

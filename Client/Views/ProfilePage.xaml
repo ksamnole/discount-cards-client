@@ -9,7 +9,7 @@
     
     <StackLayout Padding="40, 5, 40, 5">
         <Label Text="Ваш логин" TextColor="#323232"/>
-        <Label Text="Example" FontSize="20" TextDecorations="Underline"></Label>
+        <Label x:Name="Login" Text="Example" FontSize="20" TextDecorations="Underline"></Label>
         <!-- <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" > -->
         <!--     <Entry TextColor="Black" Placeholder="Example" /> -->
         <!-- </Frame> -->

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Client.ViewModels.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +11,9 @@ namespace Client.Views.Auth
         {
             InitializeComponent();
             NavigationPage.SetIconColor(this, Color.Black);
+            NavigationPage.SetHasNavigationBar(this, false);
+
+            BindingContext = new RegistrationViewModel();
         }
     }
 }
