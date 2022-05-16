@@ -7,6 +7,7 @@ using Client.Models;
 using Client.Models.Interfaces;
 using Client.Views;
 using Client.Views.Auth;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Client.ViewModels.Auth
@@ -30,6 +31,12 @@ namespace Client.ViewModels.Auth
 
         private async void Registration()
         {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                await UserDialogs.Instance.AlertAsync("Отсутствует подключение к интернету");
+                return;
+            }
+            
             if (Password != ConfirmPassword)
             {
                 UserDialogs.Instance.Alert("Пароли должны быть равны");

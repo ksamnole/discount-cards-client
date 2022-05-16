@@ -3,6 +3,7 @@ using Client.Entities.Card;
 using Client.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZXing;
 
 namespace Client.Views
 {
@@ -20,8 +21,9 @@ namespace Client.Views
             CardImage.Source = card.ImageSource;
             Title.Text = card.ShopName.ToString();
             CardNumber.Text = card.Number;
-            
-            BarcodeImage.Source = ImageSource.FromUri(new Uri($"http://bwipjs-api.metafloor.com/?bcid=ean13&text={card.Number}&scale=3"));
+
+            Barcode.BarcodeFormat = card.Standart;
+            Barcode.BarcodeValue = card.Number;
         }
     }
 }

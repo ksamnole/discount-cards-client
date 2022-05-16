@@ -9,6 +9,7 @@ using Client.Entities.Card;
 using Client.Entities.Enums;
 using Client.Models.Interfaces;
 using Newtonsoft.Json;
+using ZXing;
 
 namespace Client.Models
 {
@@ -35,13 +36,15 @@ namespace Client.Models
                 return null;
             }
             var list =  JsonConvert.DeserializeObject<List<CardEntity>>(responseBody);
-
+            
+            // ShopId + 1 потому что в базе данных индексы на 1 меньше
             return list.Select(it => new Card()
             {
                 Id = it.Id,
-                ShopName = (Shops)it.ShopId,
-                ImageSource = $"{((Shops)it.ShopId).ToString().ToLower()}.png",
-                Number = it.Number
+                ShopName = (Shops)it.ShopId + 1,
+                ImageSource = $"{((Shops)it.ShopId + 1).ToString().ToLower()}.png",
+                Number = it.Number,
+                Standart = (BarcodeFormat)it.Standart
             });
         }
     }

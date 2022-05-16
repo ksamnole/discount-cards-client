@@ -2,7 +2,9 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Client.Views.CardPage">
+             x:Class="Client.Views.CardPage"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             xmlns:zxingcommon="clr-namespace:ZXing.Common;assembly=zxing">
     <NavigationPage.TitleView>
             <Grid HeightRequest="50">
                 <Grid.ColumnDefinitions>
@@ -19,7 +21,13 @@
     
     <StackLayout Padding="40, 5, 40, 5">
         <ImageButton x:Name="CardImage" HeightRequest="200" Aspect="AspectFill" CornerRadius="15" IsEnabled="False" />
-        <Image x:Name="BarcodeImage"></Image>
+        
+        <zxing:ZXingBarcodeImageView x:Name="Barcode" HeightRequest="150" Margin="0">
+            <zxing:ZXingBarcodeImageView.BarcodeOptions>
+                <zxingcommon:EncodingOptions Height="150" Width="450" Margin="0"/>
+            </zxing:ZXingBarcodeImageView.BarcodeOptions>
+        </zxing:ZXingBarcodeImageView>
+        
         <Label Text="Номер карты" TextColor="#323232" />
         <Label x:Name="CardNumber" TextDecorations="Underline" TextColor="Black" FontSize="20" FontAttributes="Bold" Text="1234567890123456" />
         <!-- <Label Text="Номер Кода" TextColor="#323232" /> -->

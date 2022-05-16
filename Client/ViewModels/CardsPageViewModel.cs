@@ -5,8 +5,10 @@ using Client.Models;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using Acr.UserDialogs;
 using Client.Entities.Card;
 using Client.Models.Interfaces;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Client.ViewModels
@@ -30,6 +32,12 @@ namespace Client.ViewModels
 
         public async void GetAllUserCardsAsync()
         {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                await UserDialogs.Instance.AlertAsync("Отсутствует подключение к интернету");
+                return;
+            }
+            
             var allCards = await _cardsModel.GetAllUserCardsAsync(_login);
 
             Cards.Clear();

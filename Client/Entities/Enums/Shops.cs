@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Client.Entities.Enums
+﻿namespace Client.Entities.Enums
 {
     public enum Shops
     {
+        Other,
         Adidas,
         Perekrestok,
         Sportmaster,

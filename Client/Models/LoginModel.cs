@@ -9,6 +9,7 @@ using Client.Entities;
 using Client.Models.Interfaces;
 using Newtonsoft.Json;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace Client.Models
 {

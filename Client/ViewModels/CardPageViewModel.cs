@@ -5,6 +5,7 @@ using Client.Entities;
 using Client.Entities.Card;
 using Client.Models;
 using Client.Models.Interfaces;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Client.ViewModels
@@ -27,6 +28,12 @@ namespace Client.ViewModels
 
         private async void DeleteCardAsync()
         {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                await UserDialogs.Instance.AlertAsync("Отсутствует подключение к интернету");
+                return;
+            }
+            
             var result = await UserDialogs.Instance.ConfirmAsync(new ConfirmConfig()
             {
                 Message = "Вы точно хотите удалить карту?",

@@ -5,6 +5,7 @@ using Client.Models;
 using Client.Models.Interfaces;
 using Client.Views;
 using Client.Views.Auth;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -28,11 +29,17 @@ namespace Client.ViewModels.Auth
 
         private async void Authentication()
         {
-            var res = await _loginModel.Authentication(new UserEntity()
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
-                Login = Login,
-                Password = Password
-            });
+                await UserDialogs.Instance.AlertAsync("Отсутствует подключение к интернету");
+                return;
+            }
+            
+            var res = await _loginModel.Authentication(new UserEntity()
+                {
+                    Login = Login,
+                    Password = Password
+                });
             
             if (res)
                 Application.Current.MainPage = new NavigationPage(new CardsPage(Login))

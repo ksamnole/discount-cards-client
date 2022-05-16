@@ -2,18 +2,29 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Client.Views.AddCardPage">
+             x:Class="Client.Views.AddCardPage"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms">
+    
     <NavigationPage.TitleView>
         <Label Text="Добавить карту" HorizontalTextAlignment="Center" Margin="0, 0, 75, 0" />
     </NavigationPage.TitleView>
     
     <StackLayout Padding="40, 5, 40, 5">
-        <Label Text="Номер карты" TextColor="#323232" />
+        <Label Text="Отсканируйте штрих-код на карте" HorizontalTextAlignment="Center"></Label>
+        
+        <zxing:ZXingScannerView IsScanning="True" ScanResultCommand="{Binding ScanCodeResultCommand}" HeightRequest="200"/>
+        
+        <Label Text="Выберите магазин" TextColor="#323232" />
         <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
-            <Entry x:Name="CardNumber" Text="{Binding CardNumber }" TextColor="Black" Placeholder="7789245624562123" />
+            <Picker SelectedIndex="{Binding CurrentShopIndex}" ItemsSource="{Binding Shops}" />
+                <!-- <Entry x:Name="Shop" TextColor="Black" Placeholder="" IsEnabled="False" /> -->
         </Frame>
         
-        <Button TextColor="White" Text="Сохранить" CornerRadius="5" BackgroundColor="#9FB4E9" Margin="0,0,0,15" VerticalOptions="EndAndExpand" Command="{ Binding AddNewCardCommand }"></Button>
+        <Label Text="Номер карты" TextColor="#323232" />
+        <!-- <Entry x:Name="CardNumber" Text="{Binding CardNumber, Mode=TwoWay}" TextColor="Black" Placeholder="7789245624562123" IsEnabled="False"  /> -->
+        <Label x:Name="CardNumber" Text="{Binding CardNumber, Mode=TwoWay}" FontSize="20" TextDecorations="Underline"></Label>
         
+        <Button TextColor="White" Text="Сохранить" CornerRadius="5" BackgroundColor="#9FB4E9" Margin="0,0,0,15" VerticalOptions="EndAndExpand" Command="{ Binding AddNewCardCommand }"></Button>
     </StackLayout>
+    
 </ContentPage>

@@ -58,8 +58,11 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="3.1.0-beta2" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="3.1.0-beta2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -81,6 +84,7 @@
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\delete_card.png" />
     <AndroidResource Include="Resources\drawable\magnit.png" />
+    <AndroidResource Include="Resources\drawable\other.png" />
     <AndroidResource Include="Resources\drawable\perekrestok.png" />
     <AndroidResource Include="Resources\drawable\profile.png">
       <SubType>Designer</SubType>
