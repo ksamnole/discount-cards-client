@@ -18,6 +18,7 @@
     </NavigationPage.TitleView>
 
     <StackLayout Padding="30, 0, 30, 0">
+        <Button Text="Ближайший магазин" Command="{Binding GetNearestCardCommand}"></Button>
         <!-- <Button Text="Register" Clicked="GoToRegistrationPage"></Button> -->
         <!-- <Button Text="Login" Clicked="GoToLoginPage"></Button> -->
         <ListView ItemTapped="Card_OnClick" x:Name="ListViewCards" ItemsSource="{Binding Cards}" RefreshCommand="{Binding GetAllUserCardsAsyncCommand }" IsPullToRefreshEnabled="True" HasUnevenRows="True">

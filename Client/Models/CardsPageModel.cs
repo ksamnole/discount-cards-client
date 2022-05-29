@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using Client.Entities;
 using Client.Entities.Card;
-using Client.Entities.Enums;
 using Client.Models.Interfaces;
 using Newtonsoft.Json;
+using Unidecode.NET;
+using Xamarin.Forms;
 using ZXing;
 
 namespace Client.Models
@@ -35,17 +35,18 @@ namespace Client.Models
 
                 return null;
             }
+
             var list =  JsonConvert.DeserializeObject<List<CardEntity>>(responseBody);
-            
-            // ShopId + 1 потому что в базе данных индексы на 1 меньше
+
             return list.Select(it => new Card()
-            {
-                Id = it.Id,
-                ShopName = (Shops)it.ShopId + 1,
-                ImageSource = $"{((Shops)it.ShopId + 1).ToString().ToLower()}.png",
-                Number = it.Number,
-                Standart = (BarcodeFormat)it.Standart
-            });
+                {
+                    Id = it.Id,
+                    ShopName = it.ShopName,
+                    ImageSource = $"{it.ShopName.Unidecode()}.png",
+                    Number = it.Number,
+                    Standart = (BarcodeFormat)it.Standart,
+                    IsSync = true
+                }).ToList();
         }
     }
 }

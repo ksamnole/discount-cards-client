@@ -10,9 +10,9 @@ namespace Client.Models
 {
     public class CardPageModel : ICardPageModel
     {
-        public async Task DeleteCardAsync(int id)
+        public async Task DeleteCardAsync(string number)
         {
-            var response = await HttpClients.Client.HttpClient.DeleteAsync($"cards/{id}");
+            var response = await HttpClients.Client.HttpClient.DeleteAsync($"cards/{number}");
 
             var responseBody = await response.Content.ReadAsStringAsync();
             

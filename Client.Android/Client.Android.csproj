@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
     <PackageReference Include="ZXing.Net.Mobile" Version="3.1.0-beta2" />
@@ -84,7 +85,7 @@
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\delete_card.png" />
     <AndroidResource Include="Resources\drawable\magnit.png" />
-    <AndroidResource Include="Resources\drawable\other.png" />
+    <AndroidResource Include="Resources\drawable\drugoe.png" />
     <AndroidResource Include="Resources\drawable\perekrestok.png" />
     <AndroidResource Include="Resources\drawable\profile.png">
       <SubType>Designer</SubType>

@@ -13,24 +13,28 @@ namespace Client.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CardsPage : ContentPage
     {
+        public static Location Location { get; set; }
+        
         private CancellationTokenSource cts;
         
         private readonly CardsPageViewModel _cardsPageViewModel;
+        private readonly AddCardViewModel _addCardPageViewModel;
         
         public CardsPage(string login)
         {
             InitializeComponent();
 
-            _cardsPageViewModel = new CardsPageViewModel(login);
-            var addCardPageViewModel = new AddCardViewModel(Navigation, login);
+            _cardsPageViewModel = new CardsPageViewModel(Navigation, login);
+            _addCardPageViewModel = new AddCardViewModel(Navigation, login);
 
             BindingContext = _cardsPageViewModel;
             
             ProfileButton.Clicked += async (sender, args) => await Navigation.PushAsync(new ProfilePage(login));
-            AddCardButton.Clicked += async (sender, args) => await Navigation.PushAsync(new AddCardPage(addCardPageViewModel));
+            AddCardButton.Clicked += async (sender, args) => await Navigation.PushAsync(new AddCardPage(_addCardPageViewModel));
 
+            _cardsPageViewModel.OnGetNewLocation += GetCurrentLocation;
             _cardsPageViewModel.OnRefreshCardsCompleted += () => ListViewCards.IsRefreshing = false;
-            addCardPageViewModel.OnNewCardAdded += () => _cardsPageViewModel.GetAllUserCardsAsync();
+            _addCardPageViewModel.OnNewCardAdded += () => _cardsPageViewModel.GetAllUserCardsAsync();
         }
 
         protected override void OnAppearing()
@@ -41,7 +45,7 @@ namespace Client.Views
             
             base.OnAppearing();
         }
-        
+
         protected override void OnDisappearing()
         {
             if (cts != null && !cts.IsCancellationRequested)
@@ -56,7 +60,7 @@ namespace Client.Views
             {
                 var request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
                 cts = new CancellationTokenSource();
-                var location = await Geolocation.GetLocationAsync(request, cts.Token);
+                Location = await Geolocation.GetLocationAsync(request, cts.Token);
             }
             catch (FeatureNotSupportedException fnsEx)
             {

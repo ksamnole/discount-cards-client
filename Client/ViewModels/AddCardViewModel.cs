@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Acr.UserDialogs;
-using Client.Entities;
 using Client.Entities.Card;
-using Client.Entities.Enums;
+using Client.Entities.Shop;
 using Client.Models;
 using Client.Models.Interfaces;
-using Client.Views;
+using Unidecode.NET;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using ZXing;
@@ -21,7 +20,7 @@ namespace Client.ViewModels
         public ICommand ScanCodeResultCommand { get; }
         public string CardNumber { get; set; }
         public int CurrentShopIndex { get; set; }
-        public List<string> Shops => Enum.GetNames(typeof(Shops)).ToList();
+        public List<string> Shops { get; set; }
         public event Action OnNewCardAdded;
         
         private readonly IAddCardModel _addCardModel;
@@ -37,8 +36,29 @@ namespace Client.ViewModels
             _addCardModel = new AddCardModel();
             AddNewCardCommand = new Command(AddNewCard);
             ScanCodeResultCommand = new Command<ZXing.Result>(ScanCodeResult);
+            Shops = new List<string>();
 
+            UpdateShops();
+            
             CardNumber = "0000000000000";
+        }
+
+        public async void UpdateShops()
+        {
+            IEnumerable<Shop> shops;
+            
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                shops = await _addCardModel.GetShopsAsync();
+
+                await App.ShopDb.InsertShopsFromServer(shops);
+            }
+            else
+            {
+                shops = await App.ShopDb.GetShopsAsync();
+            }
+            
+            Shops = shops.Select(x => x.Name).ToList();
         }
 
         private void ScanCodeResult(ZXing.Result result)
@@ -58,20 +78,55 @@ namespace Client.ViewModels
                 await UserDialogs.Instance.AlertAsync("Номер карты не должен быть пустым");
                 return;
             }
-            
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+
+            var shopName = Shops[CurrentShopIndex];
+
+            if (shopName != "Другое")
             {
-                await UserDialogs.Instance.AlertAsync("Отсутствует подключение к интернету");
-                return;
+                if (!await App.CardDb.IsShopUnique(shopName))
+                {
+                    await UserDialogs.Instance.AlertAsync("Карта этого магазина уже добавлена");
+                    return;
+                }
             }
-            
-            await _addCardModel.AddNewCardAsync(new CreateCardEntity()
+
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                UserLogin = _login,
-                ShopId = CurrentShopIndex - 1, // Other имеет id -1, а в enum id = 0, поэтому вычетаем
-                Number = CardNumber,
-                Standart = (int)standart
-            });
+                var newCardId = await _addCardModel.AddNewCardAsync(new CreateCardEntity()
+                {
+                    UserLogin = _login,
+                    ShopName = shopName,
+                    Number = CardNumber,
+                    Standart = (int)standart
+                });
+                
+                if (newCardId == -1) return;
+
+                await App.CardDb.AddNewCard(new Card()
+                {
+                    Id = newCardId,
+                    Number = CardNumber,
+                    Standart = standart,
+                    ShopName = shopName,
+                    ImageSource = $"{Shops[CurrentShopIndex].Unidecode()}.png",
+                    IsSync = true
+                });
+
+            }
+            else
+            {
+                if (!Application.Current.Properties.ContainsKey("NeedSync"))
+                    Application.Current.Properties.Add("NeedSync", 1);
+
+                await App.CardDb.AddNewCard(new Card()
+                {
+                    Number = CardNumber,
+                    Standart = standart,
+                    ShopName = shopName,
+                    ImageSource = $"{Shops[CurrentShopIndex].Unidecode()}.png",
+                    IsSync = false
+                });
+            }
 
             OnNewCardAdded?.Invoke();
             

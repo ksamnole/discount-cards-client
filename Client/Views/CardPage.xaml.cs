@@ -1,6 +1,7 @@
 ﻿using System;
 using Client.Entities.Card;
 using Client.ViewModels;
+using Unidecode.NET;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing;
@@ -18,8 +19,8 @@ namespace Client.Views
             var cardPageViewModel = new CardPageViewModel(Navigation, card);
             BindingContext = cardPageViewModel;
             
-            CardImage.Source = card.ImageSource;
-            Title.Text = card.ShopName.ToString();
+            Title.Text = card.ShopName;
+            CardImage.Source = $"{card.ShopName.Unidecode()}.png";
             CardNumber.Text = card.Number;
 
             Barcode.BarcodeFormat = card.Standart;
