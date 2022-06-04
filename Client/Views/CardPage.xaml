@@ -19,7 +19,7 @@
             </Grid>
     </NavigationPage.TitleView>
     
-    <StackLayout Padding="40, 5, 40, 5">
+    <StackLayout Padding="30, 5, 30, 5">
         <ImageButton x:Name="CardImage" HeightRequest="200" Aspect="AspectFill" CornerRadius="15" IsEnabled="False" />
         
         <zxing:ZXingBarcodeImageView x:Name="Barcode" HeightRequest="150" Margin="0">

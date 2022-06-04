@@ -19,8 +19,7 @@ namespace Client.ViewModels
         public ICommand GetNearestCardCommand { get; }
         public ObservableCollection<Card> Cards { get; set; }
         public event Action OnRefreshCardsCompleted;
-        public event Action OnGetNewLocation;
-        
+
         private readonly INavigation _navigation;
         private readonly ICardsPageModel _cardsModel;
         private readonly IAddCardModel _addCardModel;
@@ -35,36 +34,43 @@ namespace Client.ViewModels
             _cardsModel = new CardsPageModel();
             _cardModel = new CardPageModel();
             Cards = new ObservableCollection<Card>();
-            GetAllUserCardsAsyncCommand = new Command(GetAllUserCardsAsync);
-            GetNearestCardCommand = new Command(GetNearestCard);
+            GetAllUserCardsAsyncCommand = new Command(async () => await GetAllUserCardsAsync());
+            GetNearestCardCommand = new Command(() => GetNearestCard());
         }
 
-        public async void GetNearestCard()
+        public async void GetNearestCard(bool needGetCards = false)
         {
-            var location = CardsPage.Location;
+            if (needGetCards)
+                await GetAllUserCardsAsync();
             
-            if (location != null)
-            {
-                await ShopLocationModel.UpdateDistanceOnCards((float)location.Longitude, (float)location.Latitude, Cards);
+            if (Cards.Count == 0) return;
 
-                await _navigation.PushAsync(new CardPage(Cards[0]));
-            }
+            var location = await CardsPage.GetCurrentLocation();
+
+            if (location == null) return;
+            
+            await ShopLocationModel.UpdateDistanceOnCards(location.Longitude, location.Latitude, Cards);
+                
+            var cardsFromLocalDb = await App.CardDb.GetOrderedByDistanceCardsAsync();
+            
+            Cards.Clear();
+
+            foreach (var card in cardsFromLocalDb)
+                Cards.Add(card);
+                
+            await _navigation.PushAsync(new CardPage(Cards[0]));
         }
 
-        public async void GetAllUserCardsAsync()
+        public async Task GetAllUserCardsAsync()
         {
-            OnGetNewLocation?.Invoke();
-            
-            IEnumerable<Card> allCards;
-
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 await SyncCards();
+
+                var cardsFromRemoteDb = await _cardsModel.GetAllUserCardsAsync(_login);
                 
-                allCards = await _cardsModel.GetAllUserCardsAsync(_login);
-                
-                if (allCards != null)
-                    await App.CardDb.InsertCardsFromServer(allCards);
+                if (cardsFromRemoteDb != null)
+                    await App.CardDb.InsertCardsFromServer(cardsFromRemoteDb);
             }
             
             var cardsFromLocalDb = await App.CardDb.GetOrderedByDistanceCardsAsync();
@@ -80,6 +86,15 @@ namespace Client.ViewModels
         private async Task SyncCards()
         {
             if (!Application.Current.Properties.ContainsKey("NeedSync")) return;
+
+            var deletedCards = await App.DeletedCardDb.GetAllAsync();
+
+            foreach (var deletedCard in deletedCards)
+            {
+                await _cardModel.DeleteCardAsync(deletedCard.Number);
+
+                await App.DeletedCardDb.DeleteCardByNumber(deletedCard.Number);
+            }
             
             var notSyncCards = await App.CardDb.GetNotSyncCards();
 
@@ -99,14 +114,6 @@ namespace Client.ViewModels
                 card.IsSync = true;
         
                 await App.CardDb.UpdateCard(card);
-            }
-
-            if (CardPageViewModel.NotActiveCardNumbers != null)
-            {
-                foreach (var number in CardPageViewModel.NotActiveCardNumbers)
-                {
-                    await _cardModel.DeleteCardAsync(number);
-                }
             }
 
             Application.Current.Properties.Remove("NeedSync");

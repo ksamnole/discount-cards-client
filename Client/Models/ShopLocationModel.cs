@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -10,28 +8,23 @@ using Client.Entities;
 using Client.Entities.Card;
 using Client.Entities.ShopLocation;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
 
 namespace Client.Models
 {
     public static class ShopLocationModel
     {
-        public static async Task UpdateDistanceOnCards(float longtitude, float latitude, IEnumerable<Card> cards)
+        public static async Task UpdateDistanceOnCards(double longitude, double latitude, IEnumerable<Card> cards)
         {
-            // var shopLocations = new List<ShopLocation>();
-            var shopLocations = new Dictionary<Card, double>();
-            
             var requestUri = $"shoplocations";
 
             foreach (var card in cards)
             {
-                if (card.ShopName == "Другое")
-                    continue;
-
                 var data = JsonConvert.SerializeObject(new RequestShopLocation()
                 {
-                    Longtitude = longtitude,
+                    Longitude = longitude,
                     Latitude = latitude,
-                    ShopName = card.ShopName
+                    Shop = card.ShopName
                 });
                 
                 var content = new StringContent(data, Encoding.UTF8, "application/json");
@@ -56,45 +49,14 @@ namespace Client.Models
                 }
                 
                 var shopLocation = JsonConvert.DeserializeObject<ShopLocation>(responseBody);
-                
-                var tLongtitude = Math.Abs(longtitude - shopLocation.Longtitude);
-                var tLatitude = Math.Abs(latitude - shopLocation.Latitude);
-                
-                var path = Math.Sqrt(Math.Pow(tLatitude, 2) * Math.Pow(tLongtitude, 2));
 
-                card.LastDistanceToShop = path;
+                var distance =
+                    Location.CalculateDistance(latitude,longitude,shopLocation.Latitude, shopLocation.Longitude, DistanceUnits.Kilometers);
+
+                card.LastDistanceToShop = distance;
 
                 await App.CardDb.UpdateCard(card);
-
-                // shopLocations.Add(card, path);
-
-                // var shopLocation = JsonConvert.DeserializeObject<ShopLocation>(responseBody);
-                //
-                // shopLocation.CardId = card.Id;
-                //
-                // shopLocations.Add(shopLocation);
             }
-
-            // return shopLocations.OrderBy(x => x.Value).Select(x => x.Key).ToList();
-
-            // var nearestCardId = -999;
-            // var nearestPath = double.MaxValue;
-            //
-            // foreach (var t in shopLocations)
-            // {
-            //     var tLongtitude = Math.Abs(longtitude - t.Longtitude);
-            //     var tLatitude = Math.Abs(latitude - t.Latitude);
-            //
-            //     var path = Math.Sqrt(Math.Pow(tLatitude, 2) * Math.Pow(tLongtitude, 2));
-            //
-            //     if (path < nearestPath)
-            //     {
-            //         nearestPath = path;
-            //         nearestCardId = t.CardId;
-            //     }
-            // }
-            //
-            // return nearestCardId;
         }
     }
 }

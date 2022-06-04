@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Client.Entities.Shop;
 using SQLite;
@@ -35,10 +36,7 @@ namespace Client.Data
         {
             foreach (var shop in shops)
             {
-                if (await _db.Table<Shop>().FirstOrDefaultAsync(x => x.Name == shop.Name) == null)
-                {
-                    await _db.InsertAsync(shop);
-                }
+                await _db.InsertOrReplaceAsync(shop);
             }
         }
     }

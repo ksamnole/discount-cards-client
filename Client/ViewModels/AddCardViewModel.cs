@@ -7,6 +7,7 @@ using Client.Entities.Card;
 using Client.Entities.Shop;
 using Client.Models;
 using Client.Models.Interfaces;
+using Client.Views;
 using Unidecode.NET;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -21,8 +22,7 @@ namespace Client.ViewModels
         public string CardNumber { get; set; }
         public int CurrentShopIndex { get; set; }
         public List<string> Shops { get; set; }
-        public event Action OnNewCardAdded;
-        
+
         private readonly IAddCardModel _addCardModel;
         private readonly INavigation _navigation;
         private readonly string _login;
@@ -37,6 +37,7 @@ namespace Client.ViewModels
             AddNewCardCommand = new Command(AddNewCard);
             ScanCodeResultCommand = new Command<ZXing.Result>(ScanCodeResult);
             Shops = new List<string>();
+            standart = BarcodeFormat.EAN_13;
 
             UpdateShops();
             
@@ -45,20 +46,16 @@ namespace Client.ViewModels
 
         public async void UpdateShops()
         {
-            IEnumerable<Shop> shops;
-            
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                shops = await _addCardModel.GetShopsAsync();
+                var shopsFromRemoteDb = await _addCardModel.GetShopsAsync();
 
-                await App.ShopDb.InsertShopsFromServer(shops);
+                await App.ShopDb.InsertShopsFromServer(shopsFromRemoteDb);
             }
-            else
-            {
-                shops = await App.ShopDb.GetShopsAsync();
-            }
-            
-            Shops = shops.Select(x => x.Name).ToList();
+
+            var shopsFromLocalDb = await App.ShopDb.GetShopsAsync();
+
+            Shops = shopsFromLocalDb.Select(x => x.Name).ToList();
         }
 
         private void ScanCodeResult(ZXing.Result result)
@@ -80,6 +77,10 @@ namespace Client.ViewModels
             }
 
             var shopName = Shops[CurrentShopIndex];
+            var imageSource = $"{Shops[CurrentShopIndex].Unidecode().Replace(" ", "")}.png";
+            
+            Console.WriteLine("!!!!!!!!");
+            Console.WriteLine(imageSource);
 
             if (shopName != "Другое")
             {
@@ -108,7 +109,7 @@ namespace Client.ViewModels
                     Number = CardNumber,
                     Standart = standart,
                     ShopName = shopName,
-                    ImageSource = $"{Shops[CurrentShopIndex].Unidecode()}.png",
+                    ImageSource = imageSource,
                     IsSync = true
                 });
 
@@ -123,12 +124,12 @@ namespace Client.ViewModels
                     Number = CardNumber,
                     Standart = standart,
                     ShopName = shopName,
-                    ImageSource = $"{Shops[CurrentShopIndex].Unidecode()}.png",
+                    ImageSource = imageSource,
                     IsSync = false
                 });
             }
 
-            OnNewCardAdded?.Invoke();
+            CardsPage.NeedRefresh = true;
             
             await _navigation.PopAsync();
         }

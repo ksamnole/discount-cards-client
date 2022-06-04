@@ -17,10 +17,7 @@
         </Grid>
     </NavigationPage.TitleView>
 
-    <StackLayout Padding="30, 0, 30, 0">
-        <Button Text="Ближайший магазин" Command="{Binding GetNearestCardCommand}"></Button>
-        <!-- <Button Text="Register" Clicked="GoToRegistrationPage"></Button> -->
-        <!-- <Button Text="Login" Clicked="GoToLoginPage"></Button> -->
+    <StackLayout Padding="30, 0, 30, -60">
         <ListView ItemTapped="Card_OnClick" x:Name="ListViewCards" ItemsSource="{Binding Cards}" RefreshCommand="{Binding GetAllUserCardsAsyncCommand }" IsPullToRefreshEnabled="True" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -30,6 +27,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <ImageButton Source="loupe.png" Scale="1" WidthRequest="50" BackgroundColor="#ffffff" HeightRequest="50" HorizontalOptions="End" CornerRadius="25" TranslationY="-75" Command="{Binding GetNearestCardCommand}" />
     </StackLayout>
 
 </ContentPage>

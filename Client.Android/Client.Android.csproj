@@ -83,16 +83,26 @@
     <AndroidResource Include="Resources\drawable\adidas.png">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Berezhnaiaapteka.png" />
     <AndroidResource Include="Resources\drawable\delete_card.png" />
+    <AndroidResource Include="Resources\drawable\GipermarketMetro.png" />
+    <AndroidResource Include="Resources\drawable\Kari.png" />
+    <AndroidResource Include="Resources\drawable\KrasnoeiBeloe.png" />
+    <AndroidResource Include="Resources\drawable\loupe.png" />
     <AndroidResource Include="Resources\drawable\magnit.png" />
     <AndroidResource Include="Resources\drawable\drugoe.png" />
+    <AndroidResource Include="Resources\drawable\Maksidom.png" />
+    <AndroidResource Include="Resources\drawable\Mascotte.png" />
     <AndroidResource Include="Resources\drawable\perekrestok.png" />
+    <AndroidResource Include="Resources\drawable\Pivko.png" />
     <AndroidResource Include="Resources\drawable\profile.png">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\sportmaster.png" />
     <AndroidResource Include="Resources\drawable\test_code.png" />
+    <AndroidResource Include="Resources\drawable\Vernyi.png" />
+    <AndroidResource Include="Resources\drawable\Zolotoeiabloko.png" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />

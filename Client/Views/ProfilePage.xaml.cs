@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Client.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +11,8 @@ namespace Client.Views
         {
             InitializeComponent();
             NavigationPage.SetIconColor(this, Color.Black);
+
+            BindingContext = new ProfileViewModel(login);
 
             Login.Text = login;
         }

@@ -20,7 +20,7 @@ namespace Client.Views
             BindingContext = cardPageViewModel;
             
             Title.Text = card.ShopName;
-            CardImage.Source = $"{card.ShopName.Unidecode()}.png";
+            CardImage.Source = card.ImageSource;
             CardNumber.Text = card.Number;
 
             Barcode.BarcodeFormat = card.Standart;

@@ -46,6 +46,10 @@ namespace Client.ViewModels.Auth
                 {
                     BarBackgroundColor = Color.White
                 };
+            else
+            {
+                await UserDialogs.Instance.AlertAsync("Проверьте логин и пароль");
+            }
         }
     }
 }

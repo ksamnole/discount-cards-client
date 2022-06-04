@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Client.Entities.Card;
 using Client.ViewModels;
-using Client.Views.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
@@ -13,13 +12,15 @@ namespace Client.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CardsPage : ContentPage
     {
-        public static Location Location { get; set; }
+        public static bool NeedRefresh { get; set; }
         
-        private CancellationTokenSource cts;
+        private bool isFirstLaunch { get; set; }
+        
+        private static CancellationTokenSource cts;
         
         private readonly CardsPageViewModel _cardsPageViewModel;
         private readonly AddCardViewModel _addCardPageViewModel;
-        
+
         public CardsPage(string login)
         {
             InitializeComponent();
@@ -31,18 +32,21 @@ namespace Client.Views
             
             ProfileButton.Clicked += async (sender, args) => await Navigation.PushAsync(new ProfilePage(login));
             AddCardButton.Clicked += async (sender, args) => await Navigation.PushAsync(new AddCardPage(_addCardPageViewModel));
-
-            _cardsPageViewModel.OnGetNewLocation += GetCurrentLocation;
+            
             _cardsPageViewModel.OnRefreshCardsCompleted += () => ListViewCards.IsRefreshing = false;
-            _addCardPageViewModel.OnNewCardAdded += () => _cardsPageViewModel.GetAllUserCardsAsync();
+            
+            _cardsPageViewModel.GetNearestCard(true);
         }
 
         protected override void OnAppearing()
         {
-            _cardsPageViewModel.GetAllUserCardsAsync();
-            
-            GetCurrentLocation();
-            
+            if (NeedRefresh)
+            {
+                _cardsPageViewModel.GetAllUserCardsAsync();
+
+                NeedRefresh = false;
+            }
+
             base.OnAppearing();
         }
 
@@ -54,42 +58,12 @@ namespace Client.Views
             base.OnDisappearing();
         }
 
-        private async void GetCurrentLocation()
+        public static async Task<Location> GetCurrentLocation()
         {
-            try
-            {
-                var request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
-                cts = new CancellationTokenSource();
-                Location = await Geolocation.GetLocationAsync(request, cts.Token);
-            }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                // Handle not supported on device exception
-            }
-            catch (FeatureNotEnabledException fneEx)
-            {
-                // Handle not enabled on device exception
-            }
-            catch (PermissionException pEx)
-            {
-                // Handle permission exception
-            }
-            catch (Exception ex)
-            {
-                // Unable to get location
-            }
-        }
-
-        private async void GoToRegistrationPage(object sender, EventArgs e)
-        {
-            // TEST LOGIN AND REGISTER
-            await Navigation.PushAsync(new RegistrationPage());
-        }
-        
-        private async void GoToLoginPage(object sender, EventArgs e)
-        {
-            // TEST LOGIN AND REGISTER
-            await Navigation.PushAsync(new LoginPage());
+            var request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
+            cts = new CancellationTokenSource();
+            var location = await Geolocation.GetLocationAsync(request, cts.Token);
+            return location;
         }
 
         private async void Card_OnClick(object sender, ItemTappedEventArgs e)
@@ -99,6 +73,7 @@ namespace Client.Views
             if (sender is ListView lv) lv.SelectedItem = null;
 
             var card = e.Item as Card;
+
             await Navigation.PushAsync(new CardPage(card));
         }
     }

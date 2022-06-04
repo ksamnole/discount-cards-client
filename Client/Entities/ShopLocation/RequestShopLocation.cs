@@ -2,8 +2,8 @@
 {
     public class RequestShopLocation
     {
-        public float Longtitude { get; set; }
-        public float Latitude { get; set; }
-        public string ShopName { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public string Shop { get; set; }
     }
 }

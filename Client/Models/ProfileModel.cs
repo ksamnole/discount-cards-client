@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -8,21 +7,21 @@ using Acr.UserDialogs;
 using Client.Entities;
 using Client.Models.Interfaces;
 using Newtonsoft.Json;
-using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration;
 
 namespace Client.Models
 {
-    public class LoginModel : ILoginModel
+    public class ProfileModel : IProfileModel
     {
-        public async Task<bool> Authentication(UserEntity user)
+        public async Task ChangePassword(string login, string currentPassword, string newPassword)
         {
-            var requestUri = $"user/auth";
-            var data = JsonConvert.SerializeObject(new
+            var requestUri = $"user/change_password";
+            var data = JsonConvert.SerializeObject(new ChangePassword()
             {
-                Login = user.Login,
-                Password = user.Password
+                Login = login,
+                CurrentPassword = currentPassword,
+                NewPassword = newPassword
             });
+            
             var content = new StringContent(data, Encoding.UTF8, "application/json");
 
             var response = await HttpClients.Client.HttpClient.PostAsync(requestUri, content);
@@ -41,17 +40,10 @@ namespace Client.Models
                     await UserDialogs.Instance.AlertAsync("Внутренняя ошибка сервера");
                 }
 
-                return false;
+                return;
             }
-
-            if (!Convert.ToBoolean(responseBody)) return false;
             
-            Application.Current.Properties.Add("User", user.Login);
-            Application.Current.Properties.Add("Password", user.Password);
-
-            await Application.Current.SavePropertiesAsync();
-
-            return true;
+            await UserDialogs.Instance.AlertAsync("Пароль успешно изменен");
         }
     }
 }

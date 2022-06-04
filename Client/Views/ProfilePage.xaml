@@ -19,16 +19,16 @@
         <Label Text="Изменение пароля" TextColor="#323232" FontAttributes="Italic"></Label>
         
         <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
-            <Entry IsPassword="True" TextColor="Black" Placeholder="Текущий пароль" />
+            <Entry IsPassword="True" TextColor="Black" Placeholder="Текущий пароль" Text="{Binding CurrentPassword, Mode=TwoWay}" />
         </Frame>
         <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
-            <Entry IsPassword="True" TextColor="Black" Placeholder="Новый пароль" />
+            <Entry IsPassword="True" TextColor="Black" Placeholder="Новый пароль" Text="{Binding NewPassword, Mode=TwoWay}" />
         </Frame>
         <Frame BorderColor="Black" Padding="5, 0, 5, 0" CornerRadius="5" >
-            <Entry IsPassword="True" TextColor="Black" Placeholder="Повторите новый пароль" />
+            <Entry IsPassword="True" TextColor="Black" Placeholder="Повторите новый пароль" Text="{Binding NewPasswordConfirm, Mode=TwoWay}" />
         </Frame>
         
-        <Button TextColor="White" Text="Сохранить" CornerRadius="5" BackgroundColor="#9FB4E9" Margin="0,0,0,15" VerticalOptions="EndAndExpand" />
+        <Button Command="{Binding ChangePasswordCommand}" TextColor="White" Text="Сохранить" CornerRadius="5" BackgroundColor="#9FB4E9" Margin="0,0,0,15" VerticalOptions="EndAndExpand" />
         
     </StackLayout>
 </ContentPage>

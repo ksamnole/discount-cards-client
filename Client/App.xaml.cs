@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Client.Data;
+using Client.Entities.Card;
 using Client.Views;
 using Client.Views.Auth;
 using Xamarin.Forms;
@@ -10,11 +11,16 @@ namespace Client
     public partial class App : Application
     {
         private static CardDB _cardDb;
+        private static DeletedCardsDB _deletedCardsDb;
         private static ShopDB _shopDb;
 
         public static CardDB CardDb =>
             _cardDb ?? (_cardDb = new CardDB(Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "cardDb.db3")));
+
+        public static DeletedCardsDB DeletedCardDb =>
+            _deletedCardsDb ?? (_deletedCardsDb = new DeletedCardsDB(Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "deletedCardsDb.db3")));
         
         public static ShopDB ShopDb =>
             _shopDb ?? (_shopDb = new ShopDB(Path.Combine(

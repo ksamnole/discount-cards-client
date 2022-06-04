@@ -2,7 +2,7 @@
 {
     public class ShopLocation
     {
-        public float Longtitude { get; set; }
+        public float Longitude { get; set; }
         public float Latitude { get; set; }
         public int CardId { get; set; }
     }
