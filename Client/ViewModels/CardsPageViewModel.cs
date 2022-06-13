@@ -5,6 +5,7 @@ using Client.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 using Client.Entities.Card;
 using Client.Models.Interfaces;
 using Client.Views;
@@ -40,6 +41,12 @@ namespace Client.ViewModels
 
         public async void GetNearestCard(bool needGetCards = false)
         {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                await UserDialogs.Instance.AlertAsync("Отсутствует подключение к интернету");
+                return;
+            }
+            
             if (needGetCards)
                 await GetAllUserCardsAsync();
             
@@ -47,7 +54,11 @@ namespace Client.ViewModels
 
             var location = await CardsPage.GetCurrentLocation();
 
-            if (location == null) return;
+            if (location == null)
+            {
+                await UserDialogs.Instance.AlertAsync("Не удалось определить где вы находитесь");
+                return;
+            }
             
             await ShopLocationModel.UpdateDistanceOnCards(location.Longitude, location.Latitude, Cards);
                 
@@ -109,8 +120,7 @@ namespace Client.ViewModels
                 });
                 
                 if (newCardId == -1) return;
-
-                card.Id = newCardId;
+                
                 card.IsSync = true;
         
                 await App.CardDb.UpdateCard(card);

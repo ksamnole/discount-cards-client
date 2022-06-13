@@ -27,6 +27,8 @@ namespace Client.ViewModels
         private readonly INavigation _navigation;
         private readonly string _login;
 
+        private static bool _isInProccess { get; set; }
+
         private BarcodeFormat standart { get; set; }
 
         public AddCardViewModel(INavigation navigation, string login)
@@ -38,6 +40,7 @@ namespace Client.ViewModels
             ScanCodeResultCommand = new Command<ZXing.Result>(ScanCodeResult);
             Shops = new List<string>();
             standart = BarcodeFormat.EAN_13;
+            _isInProccess = false;
 
             UpdateShops();
             
@@ -70,25 +73,32 @@ namespace Client.ViewModels
 
         private async void AddNewCard()
         {
+            if (_isInProccess) return;
+            
+            _isInProccess = true;
+            
             if (CardNumber == "0000000000000")
             {
                 await UserDialogs.Instance.AlertAsync("Номер карты не должен быть пустым");
+                _isInProccess = false;
                 return;
             }
 
             var shopName = Shops[CurrentShopIndex];
-            var imageSource = $"{Shops[CurrentShopIndex].Unidecode().Replace(" ", "")}.png";
+            var imageSource = $"{Shops[CurrentShopIndex].Unidecode().Replace(" ", "").Replace("&", "_")}.png";
             
-            Console.WriteLine("!!!!!!!!");
-            Console.WriteLine(imageSource);
-
-            if (shopName != "Другое")
+            if (!await App.CardDb.IsShopUnique(shopName))
             {
-                if (!await App.CardDb.IsShopUnique(shopName))
-                {
-                    await UserDialogs.Instance.AlertAsync("Карта этого магазина уже добавлена");
-                    return;
-                }
+                await UserDialogs.Instance.AlertAsync("Карта этого магазина уже добавлена");
+                _isInProccess = false;
+                return;
+            }
+            
+            if (!await App.CardDb.IsCardNumberUnique(CardNumber))
+            {
+                await UserDialogs.Instance.AlertAsync("Номер карты должен быть уникален");
+                _isInProccess = false;
+                return;
             }
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
@@ -100,8 +110,12 @@ namespace Client.ViewModels
                     Number = CardNumber,
                     Standart = (int)standart
                 });
-                
-                if (newCardId == -1) return;
+
+                if (newCardId == -1)
+                {
+                    _isInProccess = false;
+                    return;
+                }
 
                 await App.CardDb.AddNewCard(new Card()
                 {
@@ -130,6 +144,8 @@ namespace Client.ViewModels
             }
 
             CardsPage.NeedRefresh = true;
+
+            _isInProccess = false;
             
             await _navigation.PopAsync();
         }

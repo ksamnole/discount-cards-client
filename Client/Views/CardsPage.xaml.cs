@@ -60,10 +60,17 @@ namespace Client.Views
 
         public static async Task<Location> GetCurrentLocation()
         {
-            var request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
-            cts = new CancellationTokenSource();
-            var location = await Geolocation.GetLocationAsync(request, cts.Token);
-            return location;
+            try
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
+                cts = new CancellationTokenSource();
+                var location = await Geolocation.GetLocationAsync(request, cts.Token);
+                return location;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private async void Card_OnClick(object sender, ItemTappedEventArgs e)

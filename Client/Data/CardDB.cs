@@ -42,6 +42,11 @@ namespace Client.Data
         {
             return await _db.Table<Card>().FirstOrDefaultAsync(x => x.ShopName == shopName) == null;
         }
+        
+        public async Task<bool> IsCardNumberUnique(string number)
+        {
+            return await _db.Table<Card>().FirstOrDefaultAsync(x => x.Number == number) == null;
+        }
 
         public async Task AddNewCard(Card card)
         {

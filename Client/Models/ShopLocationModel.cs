@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -49,9 +51,11 @@ namespace Client.Models
                 }
                 
                 var shopLocation = JsonConvert.DeserializeObject<ShopLocation>(responseBody);
+                
+                Console.WriteLine($"{card.ShopName} : Latitude - {shopLocation.Latitude}, Longitude - {shopLocation.Longitude}");
 
                 var distance =
-                    Location.CalculateDistance(latitude,longitude,shopLocation.Latitude, shopLocation.Longitude, DistanceUnits.Kilometers);
+                Location.CalculateDistance(latitude,longitude,shopLocation.Latitude, shopLocation.Longitude, DistanceUnits.Kilometers);
 
                 card.LastDistanceToShop = distance;
 

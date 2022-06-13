@@ -26968,7 +26968,7 @@ namespace Client.Droid
 			public const int Kari = 2131165299;
 			
 			// aapt resource value: 0x7F070074
-			public const int KrasnoeiBeloe = 2131165300;
+			public const int Krasnoe_Beloe = 2131165300;
 			
 			// aapt resource value: 0x7F070075
 			public const int loupe = 2131165301;
@@ -27082,25 +27082,25 @@ namespace Client.Droid
 			public const int notify_panel_notification_icon_bg = 2131165337;
 			
 			// aapt resource value: 0x7F07009A
-			public const int perekrestok = 2131165338;
+			public const int piv_ko = 2131165338;
 			
 			// aapt resource value: 0x7F07009B
-			public const int Pivko = 2131165339;
+			public const int preference_list_divider_material = 2131165339;
 			
 			// aapt resource value: 0x7F07009C
-			public const int preference_list_divider_material = 2131165340;
+			public const int profile = 2131165340;
 			
 			// aapt resource value: 0x7F07009D
-			public const int profile = 2131165341;
+			public const int roundedbg = 2131165341;
 			
 			// aapt resource value: 0x7F07009E
-			public const int roundedbg = 2131165342;
+			public const int roundedbgdark = 2131165342;
 			
 			// aapt resource value: 0x7F07009F
-			public const int roundedbgdark = 2131165343;
+			public const int sportmaster = 2131165343;
 			
 			// aapt resource value: 0x7F0700A0
-			public const int sportmaster = 2131165344;
+			public const int sypermarketperekrestok = 2131165344;
 			
 			// aapt resource value: 0x7F0700A1
 			public const int test_code = 2131165345;

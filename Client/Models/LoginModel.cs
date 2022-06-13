@@ -36,10 +36,6 @@ namespace Client.Models
                     var ex = JsonConvert.DeserializeObject<ValidationException>(responseBody);
                     await UserDialogs.Instance.AlertAsync(ex.Message);
                 }
-                else
-                {
-                    await UserDialogs.Instance.AlertAsync("Внутренняя ошибка сервера");
-                }
 
                 return false;
             }

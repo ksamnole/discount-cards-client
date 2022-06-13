@@ -42,7 +42,7 @@ namespace Client.Models
                 {
                     Id = it.Id,
                     ShopName = it.ShopName,
-                    ImageSource = $"{it.ShopName.Unidecode().Replace(" ", "")}.png",
+                    ImageSource = $"{it.ShopName.Unidecode().Replace(" ", "").Replace("&", "_")}.png",
                     Number = it.Number,
                     Standart = (BarcodeFormat)it.Standart,
                     IsSync = true

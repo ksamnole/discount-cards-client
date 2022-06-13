@@ -48,8 +48,9 @@ namespace Client.ViewModels
             {
                 if (!Application.Current.Properties.ContainsKey("NeedSync"))
                     Application.Current.Properties.Add("NeedSync", 1);
-
-                await App.DeletedCardDb.AddAsync(_card);
+                
+                if (_card.IsSync)
+                    await App.DeletedCardDb.AddAsync(_card);
             }
 
             CardsPage.NeedRefresh = true;
