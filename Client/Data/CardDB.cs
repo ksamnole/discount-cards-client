@@ -62,5 +62,10 @@ namespace Client.Data
         {
             await _db.Table<Card>().DeleteAsync(x => x.Number == number);
         }
+        
+        public async Task DeleteAllCards()
+        {
+            await _db.DeleteAllAsync<Card>();
+        }
     }
 }

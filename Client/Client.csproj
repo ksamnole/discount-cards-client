@@ -28,4 +28,8 @@
   <ItemGroup>
     <None Remove="Assets\Icons\profile.png" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="VinnytsiaCity.ttf" />
+  </ItemGroup>
 </Project>

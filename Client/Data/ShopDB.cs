@@ -39,5 +39,10 @@ namespace Client.Data
                 await _db.InsertOrReplaceAsync(shop);
             }
         }
+
+        public async Task DeleteAllShops()
+        {
+            await _db.DeleteAllAsync<Shop>();
+        }
     }
 }

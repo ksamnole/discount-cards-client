@@ -27100,7 +27100,7 @@ namespace Client.Droid
 			public const int sportmaster = 2131165343;
 			
 			// aapt resource value: 0x7F0700A0
-			public const int sypermarketperekrestok = 2131165344;
+			public const int SupermarketPerekriostok = 2131165344;
 			
 			// aapt resource value: 0x7F0700A1
 			public const int test_code = 2131165345;
@@ -29275,6 +29275,9 @@ namespace Client.Droid
 			
 			// aapt resource value: 0x7F0C0002
 			public const int launcher_foreground = 2131492866;
+			
+			// aapt resource value: 0x7F0C0003
+			public const int main_icon = 2131492867;
 			
 			static Mipmap()
 			{

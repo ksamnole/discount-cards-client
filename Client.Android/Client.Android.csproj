@@ -17,7 +17,7 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
@@ -37,6 +37,7 @@
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
+    <AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +48,8 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -93,7 +96,7 @@
     <AndroidResource Include="Resources\drawable\drugoe.png" />
     <AndroidResource Include="Resources\drawable\Maksidom.png" />
     <AndroidResource Include="Resources\drawable\Mascotte.png" />
-    <AndroidResource Include="Resources\drawable\sypermarketperekrestok.png" />
+    <AndroidResource Include="Resources\drawable\SupermarketPerekriostok.png" />
     <AndroidResource Include="Resources\drawable\piv_ko.png" />
     <AndroidResource Include="Resources\drawable\profile.png">
       <SubType>Designer</SubType>
@@ -103,6 +106,11 @@
     <AndroidResource Include="Resources\drawable\test_code.png" />
     <AndroidResource Include="Resources\drawable\Vernyi.png" />
     <AndroidResource Include="Resources\drawable\Zolotoeiabloko.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\main_icon.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\main_icon.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\main_icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\main_icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\main_icon.png" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />

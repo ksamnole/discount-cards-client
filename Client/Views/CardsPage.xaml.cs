@@ -13,10 +13,9 @@ namespace Client.Views
     public partial class CardsPage : ContentPage
     {
         public static bool NeedRefresh { get; set; }
-        
-        private bool isFirstLaunch { get; set; }
-        
+
         private static CancellationTokenSource cts;
+        private static Label searching;
         
         private readonly CardsPageViewModel _cardsPageViewModel;
         private readonly AddCardViewModel _addCardPageViewModel;
@@ -24,6 +23,8 @@ namespace Client.Views
         public CardsPage(string login)
         {
             InitializeComponent();
+
+            searching = Searching;
 
             _cardsPageViewModel = new CardsPageViewModel(Navigation, login);
             _addCardPageViewModel = new AddCardViewModel(Navigation, login);
@@ -60,16 +61,38 @@ namespace Client.Views
 
         public static async Task<Location> GetCurrentLocation()
         {
+            searching.IsVisible = true;
+
+            Task.Run(SearchingOpacityBlinking);
+            
             try
             {
                 var request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
                 cts = new CancellationTokenSource();
                 var location = await Geolocation.GetLocationAsync(request, cts.Token);
+                searching.IsVisible = false;
                 return location;
             }
             catch
             {
+                searching.IsVisible = false;
                 return null;
+            }
+            
+        }
+
+        private static async void SearchingOpacityBlinking()
+        {
+            for (var i = 1f; i >= 0; i -= 0.01f)
+            {
+                searching.Opacity = i;
+                await Task.Delay(25);
+            }
+        
+            for (var i = 0f; i <= 1; i += 0.01f)
+            {
+                searching.Opacity = i;
+                await Task.Delay(25);
             }
         }
 

@@ -67,6 +67,9 @@ namespace Client.ViewModels
             {
                 CardNumber = result.Text;
                 standart = result.BarcodeFormat;
+                
+                Vibration.Vibrate(TimeSpan.FromMilliseconds(500));
+                
                 NotifyPropertyChanged(nameof(CardNumber));
             });
         }
@@ -86,6 +89,8 @@ namespace Client.ViewModels
 
             var shopName = Shops[CurrentShopIndex];
             var imageSource = $"{Shops[CurrentShopIndex].Unidecode().Replace(" ", "").Replace("&", "_")}.png";
+            
+            Console.WriteLine(imageSource);
             
             if (!await App.CardDb.IsShopUnique(shopName))
             {
