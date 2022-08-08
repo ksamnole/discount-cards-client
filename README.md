@@ -10,5 +10,4 @@
 
 <a href="https://github.com/ksamnole/discount-cards-client/graphs/contributors">
   <img src="https://contributors-img.firebaseapp.com/image?repo=ksamnole/discount-cards-client" />
-  <img src="https://contributors-img.firebaseapp.com/image?repo=batyadmx/discount-cards-server" />
 </a>
